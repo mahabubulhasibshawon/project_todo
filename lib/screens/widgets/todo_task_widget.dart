@@ -27,8 +27,8 @@ class TodoTaskWidget extends StatelessWidget {
     BoxDecoration boxDecoration = BoxDecoration(
       border: Border(
         // top: BorderSide(width: 2.0, color: Colors.grey.shade500),
-        bottom: BorderSide(width: 2.0, color: Colors.grey.shade500),
-        right: BorderSide(width: 2.0, color: Colors.grey.shade500),
+        bottom: BorderSide(width: 1.0, color: Colors.grey.shade300),
+        right: BorderSide(width: 1.0, color: Colors.grey.shade300),
       ),
     );
 
@@ -57,7 +57,7 @@ class TodoTaskWidget extends StatelessWidget {
           width: width * .2,
           height: height * 0.08,
           decoration: boxDecoration,
-          alignment: Alignment.center,
+          alignment: Alignment.centerLeft,
           padding: EdgeInsets.symmetric(horizontal: height * 0.06),
           child: Text(description, style: _taskStyle),
         ),
