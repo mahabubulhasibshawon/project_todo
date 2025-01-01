@@ -8,6 +8,17 @@ class ProjectTodoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+    print(width);
+
+    bool isMobile = width < 600;
+
+    TextStyle _headerStyle = TextStyle(
+        color: Colors.grey.shade500, fontWeight: FontWeight.w200, fontSize: isMobile ? 10 : 16);
+
+
+    TextStyle  _taskStyle =
+    TextStyle(fontWeight: FontWeight.bold, fontSize: isMobile ? 10 : 16);
+
     BoxDecoration boxDecoration = BoxDecoration(
       border: Border(
         top: BorderSide(width: 1.0, color: Colors.grey.shade300),
@@ -72,7 +83,7 @@ class ProjectTodoScreen extends StatelessWidget {
                         SizedBox(width: height * 0.01),
                         Text(
                           'Invite',
-                          style: TextStyle(fontSize: height * 0.02),
+                          style: TextStyle(fontSize: isMobile ? 14 : 20),
                         ),
                       ],
                     ),
@@ -150,7 +161,7 @@ class ProjectTodoScreen extends StatelessWidget {
                               Icon(Icons.arrow_back_ios_sharp),
                               Text(
                                 'To-do',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: isMobile ? 10 : 16),
                               ),
                             ],
                           ),
@@ -165,182 +176,183 @@ class ProjectTodoScreen extends StatelessWidget {
                   ),
                   SizedBox(width: height * .01),
                   //   title
-                  Row(
-                    children: [
-                      Container(
-                        width: width * 0.05,
-                        height: height * 0.05,
-                        child: Checkbox(
-                          value: false,
-                          onChanged: (value) {
-                            // Handle checkbox state change
-                          },
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: width * 0.05,
+                          height: height * 0.05,
+                          child: Checkbox(
+                            value: false,
+                            onChanged: (value) {
+                              // Handle checkbox state change
+                            },
+                          ),
                         ),
-                      ),
-                      SizedBox(width: height * .01),
-                      Container(
-                          width: width * .12,
-                          height: height * 0.05,
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/target.png',
-                                height: height * 0.03,
-                                color: Colors.grey.shade500,
-                              ),
-                              SizedBox(width: height * 0.01),
-                              Text('Task Name', style: _headerStyle),
-                            ],
-                          )),
-                      Container(
-                          width: width * .2,
-                          height: height * 0.05,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.dashboard_customize_outlined,
-                                color: Colors.grey.shade500,
-                              ),
-                              SizedBox(width: height * 0.01),
-                              Text('Description', style: _headerStyle),
-                            ],
-                          )),
-                      Container(
-                          width: width * .2,
-                          height: height * 0.05,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/time.png',
-                                height: height * 0.03,
-                                color: Colors.grey.shade500,
-                              ),
-                              SizedBox(width: height * 0.01),
-                              Text('Estimation', style: _headerStyle),
-                            ],
-                          )),
-                      Container(
-                          width: width * .17,
-                          height: height * 0.05,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/computer.png',
-                                height: height * 0.03,
-                                color: Colors.grey.shade500,
-                              ),
-                              SizedBox(width: height * 0.01),
-                              Text('Type', style: _headerStyle),
-                            ],
-                          )),
-                      Container(
-                          width: width * .13,
-                          height: height * 0.05,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/user.png',
-                                height: height * 0.03,
-                                color: Colors.grey.shade500,
-                              ),
-                              SizedBox(width: height * 0.01),
-                              Text('People', style: _headerStyle),
-                            ],
-                          )),
-                      Container(
-                          width: width * .1,
-                          height: height * 0.05,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/check-box.png',
-                                height: height * 0.03,
-                                color: Colors.grey.shade500,
-                              ),
-                              SizedBox(width: height * 0.01),
-                              Text('Priority', style: _headerStyle),
-                            ],
-                          )),
-                    ],
+                        SizedBox(width: height * .01),
+                        Container(
+                            width: width * .12,
+                            height: height * 0.05,
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/target.png',
+                                  height: isMobile ?  height * 0.02 : height * .03,
+                                  color: Colors.grey.shade500,
+                                ),
+                                SizedBox(width: isMobile? height * .001 :  height * 0.01),
+                                Text(isMobile ? 'Task\nName' : 'Task Name', style: _headerStyle),
+                              ],
+                            )),
+                        Container(
+                            width: width * .2,
+                            height: height * 0.05,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.dashboard_customize_outlined,
+                                  color: Colors.grey.shade500,
+                                  size: isMobile ?  height * 0.02 : height * .03,
+                                ),
+                                SizedBox(width: isMobile? height * .001 :  height * 0.01),
+                                Text('Description', style: _headerStyle),
+                              ],
+                            )),
+                        Container(
+                            width: width * .2,
+                            height: height * 0.05,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/time.png',
+                                  height:  isMobile ?  height * 0.02 : height * 0.03,
+                                  color: Colors.grey.shade500,
+                                ),
+                                SizedBox(width: height * 0.01),
+                                Text('Estimation', style: _headerStyle),
+                              ],
+                            )),
+                        Container(
+                            width: width * .17,
+                            height: height * 0.05,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/computer.png',
+                                  height:  isMobile ?  height * 0.02 : height * 0.03,
+                                  color: Colors.grey.shade500,
+                                ),
+                                SizedBox(width: height * 0.01),
+                                Text('Type', style: _headerStyle),
+                              ],
+                            )),
+                        Container(
+                            width: width * .13,
+                            height: height * 0.05,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/user.png',
+                                  height:  isMobile ?  height * 0.02 : height * 0.03,
+                                  color: Colors.grey.shade500,
+                                ),
+                                SizedBox(width: height * 0.01),
+                                Text('People', style: _headerStyle),
+                              ],
+                            )),
+                        Container(
+                            width: width * .1,
+                            height: height * 0.05,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/check-box.png',
+                                  height:  isMobile ?  height * 0.02 : height * 0.03,
+                                  color: Colors.grey.shade500,
+                                ),
+                                SizedBox(width: height * 0.01),
+                                Text('Priority', style: _headerStyle),
+                              ],
+                            )),
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        width: width * 0.05,
-                        height: height * 0.08,
-                        decoration: boxDecoration,
-                        child: Checkbox(
-                          value: false,
-                          onChanged: (value) {
-                            // Handle checkbox state change
-                          },
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: width * 0.05,
+                          height: height * 0.08,
+                          decoration: boxDecoration,
+                          child: Checkbox(
+                            value: false,
+                            onChanged: (value) {
+                              // Handle checkbox state change
+                            },
+                          ),
                         ),
-                      ),
-                      // SizedBox(width: height * 0.01),
-                      Container(
-                        width: width * .12,
-                        height: height * 0.08,
-                        decoration: boxDecoration,
-                        alignment: Alignment.center,
-                        child: Text('Employee Details', style: _taskStyle),
-                      ),
-                      Container(
-                        width: width * .2,
-                        height: height * 0.08,
-                        decoration: boxDecoration,
-                        alignment: Alignment.center,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: height * 0.06),
-                        child: Text('Creata a page where there is information',
-                            style: _taskStyle),
-                      ),
-                      Container(
-                        width: width * .2,
-                        height: height * 0.08,
-                        decoration: boxDecoration,
-                        alignment: Alignment.center,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: height * 0.06),
-                        child: Text('Feb 14,2024 - Feb 1, 2024',
-                            style: _taskStyle),
-                      ),
-                      Container(
-                        width: width * .17,
-                        height: height * 0.08,
-                        decoration: boxDecoration,
-                        alignment: Alignment.center,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: height * 0.06),
-                        child: _type('Dashboard'),
-                      ),
-                      Container(
-                        width: width * .13,
-                        height: height * 0.08,
-                        decoration: boxDecoration,
-                        alignment: Alignment.center,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: height * 0.06),
-                        child: Row(
-                          children: [
-                            CircleAvatar(),
-                            CircleAvatar(),
-                          ],
+                        // SizedBox(width: height * 0.01),
+                        Container(
+                          width: width * .12,
+                          height: height * 0.08,
+                          decoration: boxDecoration,
+                          alignment: Alignment.center,
+                          child: Text('Employee Details', style: _taskStyle),
                         ),
-                      ),
-                      Container(
-                        width: width * .1,
-                        height: height * 0.08,
-                        decoration: boxDecoration,
-                        child: _buildPriorityChip('Medium'),
-                      ),
-                    ],
+                        Container(
+                          width: width * .2,
+                          height: height * 0.08,
+                          decoration: boxDecoration,
+                          alignment: Alignment.center,
+                          child: Center(
+                            child: Text('Creata a page where there is information',
+                                style: _taskStyle),
+                          ),
+                        ),
+                        Container(
+                          width: width * .2,
+                          height: height * 0.08,
+                          decoration: boxDecoration,
+                          alignment: Alignment.center,
+                          child: Text('Feb 14,2024 - Feb 1, 2024',
+                              style: _taskStyle),
+                        ),
+                        Container(
+                          width: width * .17,
+                          height: height * 0.08,
+                          decoration: boxDecoration,
+                          alignment: Alignment.center,
+                          child: _type('Dashboard', isMobile),
+                        ),
+                        Container(
+                          width: width * .13,
+                          height: height * 0.08,
+                          decoration: boxDecoration,
+                          alignment: Alignment.center,
+                          child: isMobile ? CircleAvatar() : Row(
+                            children: [
+                              CircleAvatar(),
+                              CircleAvatar(),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: width * .1,
+                          height: height * 0.08,
+                          decoration: boxDecoration,
+                          child: _buildPriorityChip('Medium', isMobile),
+                        ),
+                      ],
+                    ),
                   ),
                   TodoTaskWidget(
                     height: height,
@@ -372,15 +384,10 @@ class ProjectTodoScreen extends StatelessWidget {
   }
 }
 
-TextStyle get _headerStyle => TextStyle(
-    color: Colors.grey.shade500, fontWeight: FontWeight.w200, fontSize: 16);
-
-TextStyle get _taskStyle =>
-    TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
-
-Widget _buildPriorityChip(String priority) {
+Widget _buildPriorityChip(String priority, bool isMobile) {
   Color chipColor;
   Color textColor;
+
   switch (priority) {
     case 'High':
       chipColor = Colors.red.shade100;
@@ -400,7 +407,9 @@ Widget _buildPriorityChip(String priority) {
   }
 
   return Chip(
-    label: Row(
+    label: isMobile
+        ? Text(priority, style: TextStyle(color: textColor, fontSize: 12))
+        : Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(Icons.circle, size: 16, color: textColor),
@@ -410,15 +419,17 @@ Widget _buildPriorityChip(String priority) {
     ),
     backgroundColor: chipColor,
     shape: StadiumBorder(
-      side: BorderSide(color: textColor, width: 1.0),
+      side: BorderSide(color: textColor, width: isMobile ? 0.5 : 1.0),
     ),
   );
 }
 
-Widget _type(String priority) {
+
+Widget _type(String type, bool isMobile) {
   Color chipColor;
   Color textColor;
-  switch (priority) {
+
+  switch (type) {
     case 'Dashboard':
       chipColor = Colors.purple.shade100;
       textColor = Colors.purple.shade800;
@@ -433,17 +444,19 @@ Widget _type(String priority) {
   }
 
   return Chip(
-    label: Row(
+    label: isMobile
+        ? Text(type, style: TextStyle(color: textColor, fontSize: 12))
+        : Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(Icons.circle, size: 16, color: textColor),
         SizedBox(width: 4),
-        Text(priority, style: TextStyle(color: textColor)),
+        Text(type, style: TextStyle(color: textColor)),
       ],
     ),
     backgroundColor: chipColor,
     shape: StadiumBorder(
-      side: BorderSide(color: textColor, width: 1.0),
+      side: BorderSide(color: textColor, width: isMobile ? 0.5 : 1.0),
     ),
   );
 }
