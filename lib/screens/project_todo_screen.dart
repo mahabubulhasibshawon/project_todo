@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_todo/bloc/checkbox_state.dart';
 import 'package:project_todo/screens/widgets/todo_task_widget.dart';
+
+import '../bloc/checkbox_bloc.dart';
+import '../bloc/checkbox_event.dart';
 
 class ProjectTodoScreen extends StatelessWidget {
   const ProjectTodoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final CheckboxBloc checkboxBloc = BlocProvider.of<CheckboxBloc>(context);
+
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     print(width);
@@ -26,6 +33,8 @@ class ProjectTodoScreen extends StatelessWidget {
         right: BorderSide(width: 1.0, color: Colors.grey.shade300),
       ),
     );
+    return BlocBuilder<CheckboxBloc, CheckboxState>(
+  builder: (context, state) {
     return DefaultTabController(
       length: 3, // Number of tabs
       child: Scaffold(
@@ -184,9 +193,9 @@ class ProjectTodoScreen extends StatelessWidget {
                           width: width * 0.05,
                           height: height * 0.05,
                           child: Checkbox(
-                            value: false,
+                            value: state.isChecked,
                             onChanged: (value) {
-                              // Handle checkbox state change
+                              context.read<CheckboxBloc>().add(CheckboxChanged());
                             },
                           ),
                         ),
@@ -294,9 +303,9 @@ class ProjectTodoScreen extends StatelessWidget {
                           height: height * 0.08,
                           decoration: boxDecoration,
                           child: Checkbox(
-                            value: false,
+                            value: state.isChecked,
                             onChanged: (value) {
-                              // Handle checkbox state change
+                              context.read<CheckboxBloc>().add(CheckboxChanged());
                             },
                           ),
                         ),
@@ -381,6 +390,8 @@ class ProjectTodoScreen extends StatelessWidget {
         ),
       ),
     );
+  },
+);
   }
 }
 

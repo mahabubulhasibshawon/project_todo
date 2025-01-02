@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../bloc/checkbox_bloc.dart';
+import '../../bloc/checkbox_event.dart';
+import '../../bloc/checkbox_state.dart';
 
 class TodoTaskWidget extends StatelessWidget {
   final double height;
@@ -24,10 +29,11 @@ class TodoTaskWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CheckboxBloc checkboxBloc = BlocProvider.of<CheckboxBloc>(context);
     final bool isMobile = width < 600;
 
-    TextStyle  _taskStyle =
-        TextStyle(fontWeight: FontWeight.bold, fontSize: isMobile ? 10 : 16);
+    TextStyle _taskStyle =
+    TextStyle(fontWeight: FontWeight.bold, fontSize: isMobile ? 10 : 16);
 
     BoxDecoration boxDecoration = BoxDecoration(
       border: Border(
@@ -37,65 +43,70 @@ class TodoTaskWidget extends StatelessWidget {
       ),
     );
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          Container(
-            width: width * 0.05,
-            height: height * 0.08,
-            decoration: boxDecoration,
-            child: Checkbox(
-              value: false,
-              onChanged: (value) {
-                // Handle checkbox state change
-              },
-            ),
+    return BlocBuilder<CheckboxBloc, CheckboxState>(
+      builder: (context, state) {
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              Container(
+                width: width * 0.05,
+                height: height * 0.08,
+                decoration: boxDecoration,
+                child: Checkbox(
+                  value: state.isChecked,
+                  onChanged: (value) {
+                    context.read<CheckboxBloc>().add(CheckboxChanged());
+                  },
+                ),
+              ),
+              // SizedBox(width: height * 0.01),
+              Container(
+                width: width * .12,
+                height: height * 0.08,
+                decoration: boxDecoration,
+                alignment: Alignment.center,
+                child: Text(taskName, style: _taskStyle),
+              ),
+              Container(
+                width: width * .2,
+                height: height * 0.08,
+                decoration: boxDecoration,
+                alignment: Alignment.center,
+                child: Text(description, style: _taskStyle),
+              ),
+              Container(
+                width: width * .2,
+                height: height * 0.08,
+                decoration: boxDecoration,
+                alignment: Alignment.center,
+                child: Text(estimation, style: _taskStyle),
+              ),
+              Container(
+                width: width * .17,
+                height: height * 0.08,
+                decoration: boxDecoration,
+                alignment: Alignment.center,
+                child: _type(type, isMobile),
+              ),
+              Container(
+                width: width * .13,
+                height: height * 0.08,
+                decoration: boxDecoration,
+                alignment: Alignment.center,
+                child: isMobile ? CircleAvatar() : Row(
+                  children: [CircleAvatar(), CircleAvatar(),],),
+              ),
+              Container(
+                width: width * .1,
+                height: height * 0.08,
+                decoration: boxDecoration,
+                child: _buildPriorityChip(priority, isMobile),
+              ),
+            ],
           ),
-          // SizedBox(width: height * 0.01),
-          Container(
-            width: width * .12,
-            height: height * 0.08,
-            decoration: boxDecoration,
-            alignment: Alignment.center,
-            child: Text(taskName, style: _taskStyle),
-          ),
-          Container(
-            width: width * .2,
-            height: height * 0.08,
-            decoration: boxDecoration,
-            alignment: Alignment.center,
-            child: Text(description, style: _taskStyle),
-          ),
-          Container(
-            width: width * .2,
-            height: height * 0.08,
-            decoration: boxDecoration,
-            alignment: Alignment.center,
-            child: Text(estimation, style: _taskStyle),
-          ),
-          Container(
-            width: width * .17,
-            height: height * 0.08,
-            decoration: boxDecoration,
-            alignment: Alignment.center,
-            child: _type(type, isMobile),
-          ),
-          Container(
-            width: width * .13,
-            height: height * 0.08,
-            decoration: boxDecoration,
-            alignment: Alignment.center,
-            child: isMobile ? CircleAvatar() : Row(children: [CircleAvatar(),CircleAvatar(),],),
-          ),
-          Container(
-            width: width * .1,
-            height: height * 0.08,
-            decoration: boxDecoration,
-            child: _buildPriorityChip(priority, isMobile),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
