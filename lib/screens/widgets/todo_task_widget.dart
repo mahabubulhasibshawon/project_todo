@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/checkbox_bloc.dart';
 import '../../bloc/checkbox_event.dart';
 import '../../bloc/checkbox_state.dart';
+import '../../cubit/checkbox_cubit.dart';
 
 class TodoTaskWidget extends StatelessWidget {
+  final String rowId;
   final double height;
   final double width;
   final String taskName;
@@ -17,6 +19,7 @@ class TodoTaskWidget extends StatelessWidget {
 
   const TodoTaskWidget({
     super.key,
+    required this.rowId,
     required this.height,
     required this.width,
     required this.taskName,
@@ -53,10 +56,14 @@ class TodoTaskWidget extends StatelessWidget {
                 width: width * 0.05,
                 height: height * 0.08,
                 decoration: boxDecoration,
-                child: Checkbox(
-                  value: state.isChecked,
-                  onChanged: (value) {
-                    context.read<CheckboxBloc>().add(CheckboxChanged());
+                child: BlocBuilder<CheckboxCubit, Map<String, bool>>(
+                  builder: (context, checkboxStates) {
+                    return Checkbox(
+                      value: checkboxStates[rowId] ?? false,
+                      onChanged: (value) {
+                        context.read<CheckboxCubit>().toggleCheckbox(rowId);
+                      },
+                    );
                   },
                 ),
               ),
